@@ -1,0 +1,97 @@
+<html>
+<head>
+
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="niftyplayer.js"></script>
+<script>
+
+</script>
+<style>
+body {
+	background: black;
+	margin: 0 auto;
+}
+
+.border {
+	background: url(images/border.png);
+}
+
+.e {
+	background-color: black;
+}
+
+.b {
+	background: url(images/border.png);
+}
+
+.d {
+	background: url(images/diamond.png);
+}
+
+.s {
+	background: url(images/stone.png);
+}
+
+.g {
+	background: url(images/ground.png);
+}
+
+.p {
+	background: url(images/player.png);
+}
+
+.m {
+	background: url(images/enemy.png);
+}
+
+.r {
+	background: url(images/door.png);
+}
+</style>
+
+
+
+
+
+</head>
+
+
+<body onKeyDown="move(event)" onLoad="initer()">
+
+<div style='width: 100%; height: 100%;'>
+<div
+	style='text-align: center; margin: 0 auto; padding-top: 20px; color: gray; font-size: 9px;'>
+<table
+	style='margin: 0 auto; padding: 0px; width: 704px; border: 1px solid black; height: 480px;'
+	cellpadding=0 cellspacing=0 id="gameTab">
+	<tr>
+		<td style='text-align: center; background: black'>
+		<div id='main' style='width: 100%; height: 100%'>
+		<div id='press'
+			style='position: absolute; margin-top: 350px; margin-left: 52px;'><img
+			style='width: 240px;' src='images/press.png'></div>
+		<img style='width: 642px;' src='images/main.png'></div>
+		</td>
+	</tr>
+</table>
+Copyright Marek Mitis @ 2010. All rights Reserved.<br>
+<div style='width: 1px;'><object
+	classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+	width="" height="" id="niftyPlayer1" align="">
+	<param name=movie value="niftyplayer.swf?file=music.mp3&as=1">
+	<param name=quality value=high>
+	<param name=bgcolor value=#FFFFFF>
+	<embed src="niftyplayer.swf?file=music.mp3&as=1" quality=high
+		bgcolor=#FFFFFF width="0" height="0" name="niftyPlayer1" align=""
+		type="application/x-shockwave-flash" swLiveConnect="true"
+		pluginspage="http://www.macromedia.com/go/getflashplayer">
+	</embed> </object></div>
+</div>
+</div>
+
+<script>
+var show_press=true;var score=0;var my_level=1;function press_start(){if(show_press==true){$("#press").hide();show_press=false}else{show_press=true;$("#press").show()}}var starter=setInterval("press_start()",800);var monsters=new Array();var inter;var player=new Array();player['x']=1;player['y']=1;var player_safe=false;var map1=new Array();map1[0]=Array(2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2,2,4,2,2);map1[1]=Array(3,2,4,4,2,2,2,2,4,2,2,2,2,2,2,2,2,4,2,2,2);map1[2]=Array(2,2,2,2,2,2,2,4,2,2,2,2,2,2,4,3,2,2,2,2,2);map1[3]=Array(2,2,2,2,2,2,2,0,2,2,2,2,4,2,2,3,4,2,2,2,2);map1[4]=Array(2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,3,2,2,3,2,2);map1[5]=Array(2,4,2,2,2,2,2,1,2,2,4,2,2,4,2,3,2,2,4,2,2);map1[6]=Array(2,2,2,2,2,0,4,2,2,2,0,4,2,2,2,4,3,2,2,2,2);map1[7]=Array(4,2,2,4,3,2,2,2,2,2,2,2,4,2,2,2,2,2,3,4,2);map1[8]=Array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2);map1[9]=Array(2,2,2,2,0,2,2,2,2,2,2,1,1,2,2,2,3,2,2,2,2);map1[10]=Array(2,4,2,2,2,2,2,2,4,2,2,2,2,2,2,4,2,2,4,2,2);map1[11]=Array(2,2,0,2,2,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2);map1[12]=Array(2,2,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2);map1[13]=Array(2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2);map1['points']=12;map1['x']=2;map1['y']=7;map1['e_x']=20;map1['e_y']=0;var map3=new Array();map3[0]=Array(2,2,2,2,1,2,4,2,2,3,2,3,2,2,4,2,2,1,2,2,2);map3[1]=Array(2,2,2,2,1,2,2,4,2,2,2,2,2,4,2,2,2,1,2,2,2);map3[2]=Array(3,2,2,2,1,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2);map3[3]=Array(2,2,2,4,1,2,4,2,2,2,2,1,2,2,2,2,2,1,2,2,2);map3[4]=Array(4,4,2,2,1,2,2,2,0,2,4,1,2,2,2,4,1,1,2,2,2);map3[5]=Array(2,2,2,2,1,2,2,2,4,3,2,1,2,4,3,2,1,3,2,2,2);map3[6]=Array(2,4,0,2,1,3,2,2,2,4,2,1,2,2,4,2,1,2,2,2,2);map3[7]=Array(2,2,4,2,1,1,1,2,2,2,2,1,4,2,2,2,1,0,0,0,2);map3[8]=Array(3,2,2,2,2,3,1,2,4,2,2,1,2,2,2,2,1,0,6,0,2);map3[9]=Array(2,2,2,4,2,2,1,4,2,2,2,1,2,2,4,2,1,0,0,0,2);map3[10]=Array(4,2,2,2,2,4,1,2,2,2,2,1,2,2,2,2,2,2,2,2,2);map3[11]=Array(2,4,2,2,2,4,2,2,2,2,2,1,4,2,2,2,2,3,2,2,3);map3[12]=Array(2,2,4,2,2,2,2,2,2,2,2,1,2,2,2,4,2,2,2,2,3);map3[13]=Array(2,2,2,2,2,2,2,2,2,2,2,1,2,2,0,2,2,2,2,3,3);map3['points']=25;map3['x']=0;map3['y']=0;map3['e_x']=19;map3['e_y']=0;var map2=new Array();map2[0]=Array(2,2,2,4,2,2,4,3,2,3,2,3,2,2,4,4,2,2,2,2,2);map2[1]=Array(2,2,2,4,2,2,2,4,2,2,2,2,2,4,4,4,1,2,2,2,2);map2[2]=Array(3,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2);map2[3]=Array(2,2,2,4,2,2,4,2,2,2,3,2,2,4,2,2,1,3,2,2,2);map2[4]=Array(4,4,2,4,2,2,2,2,0,2,4,2,2,2,2,4,1,2,3,2,2);map2[5]=Array(2,2,2,4,2,2,2,2,4,3,2,2,2,4,3,2,1,3,2,2,2);map2[6]=Array(2,4,0,4,2,3,2,2,2,4,2,2,2,2,4,2,1,2,2,2,2);map2[7]=Array(2,2,4,4,4,4,4,4,4,4,2,2,4,2,2,2,1,2,2,3,2);map2[8]=Array(3,2,2,2,2,2,2,2,4,2,2,2,4,2,2,2,1,2,2,2,2);map2[9]=Array(2,2,0,0,0,0,0,4,4,2,4,2,2,2,4,2,1,4,4,4,2);map2[10]=Array(4,2,6,0,0,0,6,2,4,2,2,4,2,2,2,4,1,3,3,3,3);map2[11]=Array(2,4,0,0,0,0,0,2,2,2,2,4,4,2,2,2,1,3,3,3,3);map2[12]=Array(2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,4,1,2,2,2,3);map2[13]=Array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,2,2,3,3);map2['points']=50;map2['x']=0;map2['y']=0;map2['e_x']=19;map2['e_y']=13;var maps=new Array();maps[1]=map1;maps[2]=map3;maps[3]=map2;var map=new Array();var main_Screen=true;var map_y=13;var map_x=20;var timer=999;function timers(){var tmp_time;timer--;if(timer<100){tmp_time="0"+timer;if(timer<10){tmp_time="0"+tmp_time}}else{tmp_time=timer}if(timer==0){gameOver()}$("#timer").html(tmp_time)}function scorer(){var tmp_time;score++;tmp_time=score;if(score<10){tmp_time="0"+tmp_time}$("#scorer").html(tmp_time);if(score>=map['points']){map[map['e_y']][map['e_x']]=7}}function init_map(){var string="";string+="<tr><td style='width: 32px; height: 32px;' class='border'><div id='over' style='display:none; width: 704px; height: 480px; background: black; position: absolute; text-align: center;'><img style='width: 610px;'src='images/gameover.gif'></div></td><td style='width: 32px; height: 32px;' class='border'><div style='background: black; width: 100px; height: 25px; position: absolute; border: 1px solid white;margin-top: -14px;;'><div style='margin-top: 3px;width: 60px; height: 19px; background: url(images/level.png); float: left;'></div> <span style='float:left; color: white;font-family: georgia; font-size: 16px; margin-top: 2px; margin-left: 7px; width: 30px;'id='ac_level'>01</span></div></td>";for(i=2;i<=map_x+1;i++){string+="<td style='width: 32px; height: 32px;' class='border'>&nbsp</td>"}string+="<td style='width: 32px; height: 32px;' class='border'><div style='background: black; width: 180px; height: 25px; position: absolute; border: 1px solid white;margin-top: -14px;margin-left: -180px;'><div style='margin-top: 3px;width: 60px; height: 19px; background: url(images/timer.png); float: left;'></div> <span style='float:left; color: white;font-family: georgia; font-size: 16px; margin-top: 2px; width: 30px;'id='timer'>100</span><div style='margin-top: 3px;width: 63px; height: 19px; background: url(images/scorer.png); float: left;'></div> <span style='float:left;color: white;font-family: georgia; font-size: 16px; margin-top: 2px; width: 25px;'id='scorer'>00</span></div></td></tr>";for(i=0;i<=map_y;i++){string+="<tr><td style='width: 32px; height: 32px;' class='border'>&nbsp</td>";for(k=0;k<=map_x;k++){string+="<td class='e' style='width: 32px; height: 32px;' id='cell"+k+"x"+i+"'>&nbsp</td>"}string+="<td style='width: 32px; height: 32px;' class='border'>&nbsp</td></tr>"}string+="<tr>";for(i=0;i<=map_x+2;i++){string+="<td style='width: 32px; height: 32px;' class='border'>&nbsp</td>"}string+="</tr>";$("#gameTab").html(string)}function load_Screen(){for(i=0;i<=map_y;i++){for(k=0;k<=map_x;k++){if(k==player['x']&&i==player['y']){$("#cell"+player['x']+"x"+player['y']).removeClass().addClass("p")}else{$("#cell"+k+"x"+i).removeClass().addClass(typer(map[i][k]))}}}}function typer(id){switch(id){case 0:return"e";break;case 1:return"b";break;case 2:return"g";break;case 3:return"d";break;case 4:return"s";break;case 5:return"p";break;case 6:return"m";break;case 7:return"r";break;default:return"g"}}function move(e){if(window.event){keynum=e.keyCode}else if(e.which){keynum=e.which}if(keynum==13&&main_Screen==true){$("#main").fadeOut('slow',function(){clearInterval(starter);main_Screen=false;init_game()})}else if(main_Screen==false){switch(keynum){case 37:if(player['x']-1>=0&&map[player['y']][player['x']-1]!==1){if(map[player['y']][player['x']-1]==4){if(map[player['y']][player['x']-2]==0&&player['x']-2>=0){player['x']--;map[player['y']][player['x']-1]=4}}else{player['x']--}}break;case 38:if(player['y']-1>=0&&map[player['y']-1][player['x']]!==1&&map[player['y']-1][player['x']]!==4){player['y']--}break;case 39:if(player['x']+1<=map_x&&map[player['y']][player['x']+1]!==1){if(map[player['y']][player['x']+1]==4){if(map[player['y']][player['x']+2]==0&&player['x']+2>=0){player['x']++;map[player['y']][player['x']+1]=4}}else{player['x']++}}break;case 40:if(player['y']+1>=0&&map[player['y']+1][player['x']]!==1&&map[player['y']+1][player['x']]!==4){player['y']++}break}if(player['y']==0||map[player['y']-1][player['x']]!==0){player_safe=true}else{player_safe=false}if(map[player['y']][player['x']]==3){scorer()}else if(map[player['y']][player['x']]==6){gameOver()}if(map[player['y']][player['x']]==7){next_level()}map[player['y']][player['x']]=0;load_Screen()}}function action(){timers();clearMonster();for(i=map_y;i>=0;i--){for(k=map_x;k>=0;k--){if(map[i][k]==4){if(i+1<=map_y&&map[i+1][k]==0&&(player_safe==false||i+1!==player['y']||k!==player['x'])){map[i][k]=0;map[i+1][k]=4;if(i+1==player['y']&&k==player['x']){gameOver()}}else if(i+1<=map_y&&map[i+1][k]==6&&(player_safe==false||i+1!==player['y']||k!==player['x'])){map[i+1][k]=3}else if(i+1<=map_y&&k-1>=0&&map[i+1][k-1]==0&&map[i][k-1]==0&&(i!==player['y']&&(i+1!==player['y']||k-1!==player['x']))){map[i][k]=0;map[i][k-1]=4}else if(i+1<=map_y&&k+1<=map_x&&map[i+1][k+1]==0&&map[i][k+1]==0&&(i!==player['y']&&(i+1!==player['y']||k+1!==player['x']))){map[i][k]=0;map[i][k+1]=4}}if(map[i][k]==3){if(i+1<=map_y&&map[i+1][k]==0&&(player_safe==false||i+1!==player['y']||k!==player['x'])){map[i][k]=0;map[i+1][k]=3;if(i+1==player['y']&&k==player['x']){gameOver()}}else if(i+1<=map_y&&k+1<=map_x&&map[i+1][k+1]==0&&map[i][k+1]==0&&(i!==player['y']&&(i+1!==player['y']||k-1!==player['x']))){map[i][k]=0;map[i][k+1]=3}else if(i+1<=map_y&&k-1>=0&&map[i+1][k-1]==0&&map[i][k-1]==0&&(i!==player['y']&&(i+1!==player['y']||k-1!==player['x']))){map[i][k]=0;map[i][k-1]=3}}if(map[i][k]==6&&monsters[i][k]==false){if(player['x']==k&&player['y']==i){gameOver();break}if(k+1<=map_x&&map[i][k+1]==0&&k-1>=0&&map[i][k-1]==0&&i+1<=map_y&&map[i+1][k]==0&&i-1>=0&&map[i-1][k]==0){if(!(k-1>=0&&i-1>=0&&map[i-1][k-1]==0)){map[i][k]=0;map[i][k-1]=6;monsters[i][k-1]=true}else if(!(k+1<=map_x&&i+1<=map_y&&map[i+1][k+1]==0)){map[i][k]=0;map[i][k+1]=6;monsters[i][k+1]=true}else{map[i][k]=0;map[i-1][k]=6;monsters[i-1][k]=true}}else if((k-1>=0&&map[i][k-1]==0)&&!(i-1>=0&&map[i-1][k]==0)){map[i][k]=0;map[i][k-1]=6;monsters[i][k-1]=true}else if((i+1<=map_y&&map[i+1][k]==0)&&!(k-1>=0&&map[i][k-1]==0)){map[i][k]=0;map[i+1][k]=6;monsters[i+1][k]=true}else if(!(i+1<=map_y&&map[i+1][k]==0)&&(k+1<=map_x&&map[i][k+1]==0)){map[i][k]=0;map[i][k+1]=6;monsters[i][k+1]=true}else if((i-1>=0&&map[i-1][k]==0)&&!(k+1<=map_x&&map[i][k+1]==0)){map[i][k]=0;map[i-1][k]=6;monsters[i-1][k]=true}}}}load_Screen()}function gameOver(){clearInterval(inter);my_level=1;$("#over").fadeIn("slow",function(){setTimeout("location.reload(true);",2000)})}function init_game(){clearInterval(inter);init_map();map=maps[my_level];load_Screen();score--;scorer();player['x']=map['x'];player['y']=map['y'];map[map['y']][map['x']]=0;$("#ac_level").html("0"+my_level);inter=setInterval("action()",200)}function next_level(){my_level++;init_game()}function initer(){niftyplayer('niftyPlayer1').registerEvent('onSongOver','this.play();')}function clearMonster(){for(i=0;i<=map_y;i++){monsters[i]=new Array();for(k=0;k<=map_x;k++){monsters[i][k]=false}}}
+</script>
+</body>
+</html>
